@@ -17,7 +17,7 @@ public class CityService {
     }
 
     public List<CityDTO> findAll() {
-        return repository.findAll(Sort.by("name")).stream().map(city -> new CityDTO(city)).toList();
+        return repository.findAll(Sort.by("name")).stream().map(CityDTO::new).toList();
     }
 
     public CityDTO insert(CityDTO cityDTO) {
