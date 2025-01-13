@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/events")
@@ -26,5 +25,16 @@ public class EventController {
     @GetMapping
     public ResponseEntity<Page<EventDTO>> findAll(Pageable pageable) {
         return ResponseEntity.ok().body(service.findAll(pageable));
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
+    @PostMapping
+    public ResponseEntity<EventDTO> insert(@Valid @RequestBody EventDTO eventDTO) {
+        EventDTO newEvent = service.insert(eventDTO);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
+                .path("/{id}").buildAndExpand(newEvent.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(newEvent);
     }
 }
