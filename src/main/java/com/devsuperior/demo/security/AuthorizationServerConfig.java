@@ -1,8 +1,8 @@
 package com.devsuperior.demo.security;
 
-import com.dutra.dsCatalog.security.customgrant.CustomPasswordAuthenticationConverter;
-import com.dutra.dsCatalog.security.customgrant.CustomPasswordAuthenticationProvider;
-import com.dutra.dsCatalog.security.customgrant.CustomUserAuthorities;
+import com.devsuperior.demo.security.customgrant.CustomPasswordAuthenticationConverter;
+import com.devsuperior.demo.security.customgrant.CustomPasswordAuthenticationProvider;
+import com.devsuperior.demo.security.customgrant.CustomUserAuthorities;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -66,14 +66,7 @@ public class AuthorizationServerConfig {
     @Order(2)
     public SecurityFilterChain asSecurityFilterChain(HttpSecurity http) throws Exception {
 
-        var authorizationServerConfigurer = OAuth2AuthorizationServerConfigurer.authorizationServer();
-        http
-                .securityMatcher(authorizationServerConfigurer.getEndpointsMatcher())
-                .with(authorizationServerConfigurer, Customizer.withDefaults())
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
-
-        //OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http); deprecate
-        //http.with(OAuth2AuthorizationServerConfigurer.authorizationServer(), Customizer.withDefaults()); invalid for his structure
+        OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
 
         // @formatter:off
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
