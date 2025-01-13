@@ -1,6 +1,5 @@
 package com.devsuperior.demo.controller;
 
-import com.devsuperior.demo.dto.CityDTO;
 import com.devsuperior.demo.dto.EventDTO;
 import com.devsuperior.demo.service.EventService;
 import jakarta.validation.Valid;
@@ -27,7 +26,7 @@ public class EventController {
         return ResponseEntity.ok().body(service.findAll(pageable));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
+    @PreAuthorize("isAuthenticated() && hasAnyRole('ROLE_ADMIN', 'ROLE_CLIENT')")
     @PostMapping
     public ResponseEntity<EventDTO> insert(@Valid @RequestBody EventDTO eventDTO) {
         EventDTO newEvent = service.insert(eventDTO);
