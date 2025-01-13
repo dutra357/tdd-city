@@ -2,6 +2,7 @@ package com.devsuperior.demo.controller;
 
 import com.devsuperior.demo.dto.CityDTO;
 import com.devsuperior.demo.service.CityService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,7 +26,7 @@ public class CityController {
 
 
     @PostMapping
-    public ResponseEntity<CityDTO> saveCity(@RequestBody CityDTO cityDTO) {
+    public ResponseEntity<CityDTO> saveCity(@Valid @RequestBody CityDTO cityDTO) {
         CityDTO newCity = service.insert(cityDTO);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequestUri()
